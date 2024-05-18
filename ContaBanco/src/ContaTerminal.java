@@ -17,6 +17,7 @@ public class ContaTerminal {
 
             System.out.println("Por favor, digite o seu Saldo!");
             String saldoInput = scanner.nextLine();
+            
             saldoInput = saldoInput.replace(",", ".");
             double saldo = Double.parseDouble(saldoInput);
 
