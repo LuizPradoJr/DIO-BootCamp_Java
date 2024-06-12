@@ -1,0 +1,516 @@
+1 / 5 - Operações Bancárias Simples com Switch
+
+import java.util.Scanner;
+
+public class SimulacaoBancaria {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        double saldo = 0;
+        boolean continuar = true;
+
+        while (continuar) {
+          
+            int opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    // Ler o valor a ser depositado e atualizar/imprimir o saldo.
+                    double deposito = scanner.nextDouble();
+                    saldo += deposito;
+                    System.out.printf("Saldo atual: %.1f%n", saldo);
+                    break;
+                case 2:
+                    // Ler o valor a ser sacado e verificar/imprimir se há saldo suficiente.
+                    double saque = scanner.nextDouble();
+                    if (saque > saldo) {
+                        System.out.println("Saldo insuficiente.");
+                    } else {
+                        saldo -= saque;
+                        System.out.printf("Saldo atual: %.1f%n", saldo);
+                    }
+                    break;
+                case 3:
+                    // Exibir o saldo atual da conta.
+                    System.out.printf("Saldo atual: %.1f%n", saldo);
+                    break;
+                case 0:
+                    // Encerrar o programa.
+                    System.out.println("Programa encerrado.");
+                    continuar = false;  // Atualiza a variável de controle para encerrar o loop
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+        scanner.close();
+    }
+}
+
+
+2 / 5 - Verificação de Número de Conta Bancária
+
+import java.util.Scanner;
+
+public class VerificadorNumeroConta {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            // Solicitar ao usuário que digite o número da conta bancária.
+            String numeroConta = scanner.nextLine();
+
+            // Chamar o método que verifica se o número da conta é válido
+            verificarNumeroConta(numeroConta);
+            
+            // Caso nenhuma exceção seja lançada, imprime a mensagem de sucesso.
+            System.out.println("Numero de conta valido.");
+        } catch (IllegalArgumentException e) {
+            // Informar que o número de conta é inválido e exibir a mensagem de erro
+            System.out.println("Erro: " + e.getMessage());
+        } finally {
+            // Fechar o scanner para evitar vazamentos de recursos
+            scanner.close();
+        }
+    }
+
+    private static void verificarNumeroConta(String numeroConta) {
+        if (numeroConta.length() != 8) {
+            // Lançar uma IllegalArgumentException com a seguinte mensagem:
+            // "Numero de conta invalido. Digite exatamente 8 digitos."
+            throw new IllegalArgumentException("Numero de conta invalido. Digite exatamente 8 digitos.");
+        }
+
+        // Verificar se todos os caracteres são dígitos
+        for (char c : numeroConta.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                // Lançar uma IllegalArgumentException se não for um dígito
+                throw new IllegalArgumentException("Numero de conta invalido. Digite exatamente 8 digitos.");
+            }
+        }
+    }
+}
+
+
+Condições, Loops e Exceções na Prática com Java
+3 / 5 - Verificador de Idade para Conta Bancária
+
+import java.util.Scanner;
+
+public class VerificadorElegibilidadeConta {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int idade = scanner.nextInt();
+
+        // Verificar se a idade do cliente é >= 18
+        if (idade >= 18) {
+            // Se >= 18, imprimir "Voce esta elegivel para criar uma conta bancaria."
+            System.out.println("Voce esta elegivel para criar uma conta bancaria.");
+        } else {
+            // Caso contrário, imprimir "Voce nao esta elegivel para criar uma conta bancaria."
+            System.out.println("Voce nao esta elegivel para criar uma conta bancaria.");
+        }
+
+        // Fechar o scanner para evitar vazamentos de recursos
+        scanner.close();
+    }
+}
+
+
+Condições, Loops e Exceções na Prática com Java
+4 / 5 - Verificação de Cheque Especial
+
+import java.util.Scanner;
+
+public class VerificacaoChequeEspecial {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+      
+        double saldo = scanner.nextDouble();
+
+   
+        double saque = scanner.nextDouble();
+
+        // Define um limite para o cheque especial
+        double limiteChequeEspecial = 500;
+
+        // Verifica se o saque ultrapassa o saldo disponível
+        if (saque <= saldo) {
+            // Imprimir "Transação realizada com sucesso."
+            System.out.println("Transacao realizada com sucesso.");
+        } else {
+            // Verificar se o saque ultrapassa o limite do cheque especial
+            if (saque <= saldo + limiteChequeEspecial) {
+                // Em caso positivo, imprimir "Transacao realizada com sucesso utilizando o cheque especial."
+                System.out.println("Transacao realizada com sucesso utilizando o cheque especial.");
+            } else {
+                // Caso contrário, imprimir "Transacao nao realizada. Limite do cheque especial excedido."
+                System.out.println("Transacao nao realizada. Limite do cheque especial excedido.");
+            }
+        }
+
+        // Fechar o scanner para evitar vazamentos de recursos
+        scanner.close();
+    }
+}
+
+
+Condições, Loops e Exceções na Prática com Java
+5 / 5 - Controle de Saques
+
+
+import java.util.Scanner;
+
+public class ControleSimplesDeSaques {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+      
+        double limiteDiario = scanner.nextDouble();
+        double limiteRestante = limiteDiario;
+
+        // Loop for para iterar sobre os saques
+        for (int i = 1; ; i++) {
+
+            double valorSaque = scanner.nextDouble();
+
+            if (valorSaque == 0) {
+                System.out.println("Transacoes encerradas.");
+                break; // Encerra o loop
+            } else if (valorSaque > limiteRestante) {
+                System.out.println("Limite diario de saque atingido. Transacoes encerradas.");
+                break; // Encerra o loop
+            } else {
+                // Atualizar o limite diário e imprimir a saída no formato dos exemplos
+                limiteRestante -= valorSaque;
+                System.out.printf("Saque realizado. Limite restante: %.1f%n", limiteRestante);
+            }
+        }
+
+        // Fechar o scanner para evitar vazamentos de recursos
+        scanner.close();
+    }
+}
+
+
+
+Orientação a Objetos na Prática com Java
+1 / 5 - Registro de Transações Bancárias
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class RegistroTransacoesBancarias {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+    
+        double saldo = scanner.nextDouble();
+
+      
+        int quantidadeTransacoes = scanner.nextInt();
+
+        // Lista para armazenar as transações
+        List<String> transacoes = new ArrayList<>();
+
+        // Loop para iterar sobre as transações
+        for (int i = 1; i <= quantidadeTransacoes; i++) {
+
+            char tipoTransacao = scanner.next().toUpperCase().charAt(0);
+
+  
+            double valorTransacao = scanner.nextDouble();
+
+            // Atualiza o saldo da conta e adiciona a transação à lista
+            if (tipoTransacao == 'D') {
+                saldo += valorTransacao;
+                transacoes.add("Deposito de " + String.format("%.1f", valorTransacao));
+            } else if (tipoTransacao == 'S') {
+                saldo -= valorTransacao;
+                transacoes.add("Saque de " + String.format("%.1f", valorTransacao));
+            } else {
+                System.out.println("Opção inválida. Utilize D para depósito ou S para saque.");
+                i--; // Decrementa o índice para repetir a iteração
+            }
+        }
+
+        // Exibir o saldo final
+        System.out.printf("Saldo: %.1f\n", saldo);
+
+        // Exibir a lista de transações
+        System.out.println("Transacoes:");
+        for (int i = 0; i < transacoes.size(); i++) {
+            System.out.println((i + 1) + ". " + transacoes.get(i));
+        }
+
+        // Fechar o scanner para evitar vazamentos de recursos
+        scanner.close();
+    }
+}
+
+Orientação a Objetos na Prática com Java
+2 / 5 - Registro de Transações Bancárias com Stream API
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class RegistroTransacoesComStream {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double saldo = scanner.nextDouble();
+        int quantidadeTransacoes = scanner.nextInt();
+
+        List<Transacao> transacoes = new ArrayList<>();
+
+        for (int i = 1; i <= quantidadeTransacoes; i++) {
+            char tipoTransacao = scanner.next().toUpperCase().charAt(0);
+            double valorTransacao = scanner.nextDouble();
+
+            // Criar uma nova transação e adicioná-la à lista de transações
+            Transacao transacao = new Transacao(tipoTransacao, valorTransacao);
+            transacoes.add(transacao);
+
+            // Verifica e atualiza o saldo da conta com base no tipo de transação
+            if (transacao.getTipo() == 'D' || transacao.getTipo() == 'd' ) {
+                saldo += transacao.getValor();
+            } else if (transacao.getTipo() == 'S' || transacao.getTipo() == 's') {
+                saldo -= transacao.getValor();
+            }
+        }
+
+        // Exibir o saldo final
+        System.out.printf("Saldo : %.1f\n", saldo);
+
+        // Exibir a lista de transações
+        System.out.println("Transacoes:");
+        transacoes.stream()
+                .map(transacao -> Character.toLowerCase(transacao.getTipo()) + " de " + String.format("%.1f", transacao.getValor()))
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
+
+        // Fechar o scanner para evitar vazamentos de recursos
+        scanner.close();
+    }
+}
+
+class Transacao {
+    private char tipo;
+    private double valor;
+
+    public Transacao(char tipo, double valor) {
+        this.tipo = tipo;
+        this.valor = valor;
+    }
+
+    public char getTipo() {
+        return tipo;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+}
+
+
+Orientação a Objetos na Prática com Java
+3 / 5 - Conta Bancária com Construtor em POO
+
+
+import java.util.Scanner;
+
+public class MainContaBancaria {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Criar uma nova conta bancária com o saldo inicial
+        double saldoInicial = scanner.nextDouble();
+        ContaBancaria conta = new ContaBancaria(saldoInicial);
+
+        // Lê a Entrada com o valor do depósito e aciona o método "depositar"
+        double valorDeposito = scanner.nextDouble();
+        conta.depositar(valorDeposito);
+
+        // Lê a Entrada com o valor do saque e aciona o método "sacar"
+        double valorSaque = scanner.nextDouble();
+        conta.sacar(valorSaque);
+
+        // Fechar o scanner para evitar vazamentos de recursos
+        scanner.close();
+    }
+}
+
+class ContaBancaria {
+    private double saldo;
+
+    public ContaBancaria(double saldoInicial) {
+        this.saldo = saldoInicial;
+    }
+
+    public void depositar(double valor) {
+        saldo += valor;
+        System.out.println("Deposito feito.");
+        imprimirSaldo();
+    }
+
+    public void sacar(double valor) {
+        if (valor <= saldo) {
+            saldo -= valor;
+            System.out.println("Saque feito.");
+        } else {
+            System.out.println("Saldo insuficiente. Saque não realizado.");
+        }
+        imprimirSaldo();
+    }
+
+    private void imprimirSaldo() {
+        System.out.printf("Saldo atual: %.1f\n", this.saldo);
+    }
+}
+
+
+Orientação a Objetos na Prática com Java
+4 / 5 - Herança Bancária: Entendendo a Herança e Polimorfismo
+
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class Desafio {
+
+    public static void main(String[] args) {
+        // Lendo os dados de Entrada:
+        Scanner scanner = new Scanner(System.in);
+        String titular = scanner.next();
+        int numeroConta = scanner.nextInt();
+        double saldo = scanner.nextDouble();
+        double taxaJuros = scanner.nextDouble();
+
+        ContaPoupanca contaPoupanca = new ContaPoupanca(numeroConta, titular, saldo, taxaJuros);
+
+        System.out.println("Conta Poupanca:");
+        contaPoupanca.exibirInformacoes();
+    }
+}
+
+class ContaBancaria {
+    protected int numero;
+    protected String titular;
+    protected double saldo;
+
+    public ContaBancaria(int numero, String titular, double saldo) {
+        this.numero = numero;
+        this.titular = titular;
+        this.saldo = saldo;
+    }
+
+    public void exibirInformacoes() {
+        DecimalFormat decimalFormat = new DecimalFormat("#.0");
+        System.out.println(titular);
+        System.out.println(numero);
+        System.out.println("Saldo: R$ " + decimalFormat.format(saldo));
+    }
+}
+
+class ContaPoupanca extends ContaBancaria {
+    private double taxaJuros;
+
+    public ContaPoupanca(int numero, String titular, double saldo, double taxaJuros) {
+        super(numero, titular, saldo);
+        this.taxaJuros = taxaJuros;
+    }
+
+    @Override
+    public void exibirInformacoes() {
+        super.exibirInformacoes();
+        System.out.println("Taxa de juros: " + taxaJuros + "%");
+    }
+}
+
+
+Orientação a Objetos na Prática com Java
+5 / 5 - Cofres Seguros: Dominando o Encapsulamento e Abstração
+
+import java.util.Scanner;
+
+abstract class Cofre {
+    protected String tipo;
+    protected String metodoAbertura;
+
+    public Cofre(String tipo, String metodoAbertura) {
+        this.tipo = tipo;
+        this.metodoAbertura = metodoAbertura;
+    }
+
+    public void imprimirInformacoes() {
+        System.out.println("Tipo: " + this.tipo);
+        System.out.println("Metodo de abertura: " + this.metodoAbertura);
+    }
+}
+
+class CofreDigital extends Cofre {
+
+    private int senha;
+
+    public CofreDigital(int senha) {
+        super("Cofre Digital", "Senha");
+        this.senha = senha;
+    }
+
+    public boolean validarSenha(int confirmacaoSenha) {
+        return confirmacaoSenha == this.senha;
+    }
+}
+
+class CofreFisico extends Cofre {
+
+    public CofreFisico() {
+        super("Cofre Fisico", "Chave");
+    }
+
+}
+
+public class Desafio {
+    public static void main(String[] args) {
+        // Lê o tipo de cofre (primeira linha da entrada)
+        Scanner scanner = new Scanner(System.in);
+        String tipoCofre = scanner.nextLine();
+
+        // Implementação da lógica para criar e exibir os cofres
+        if (tipoCofre.equalsIgnoreCase("digital")) {
+            // Se o tipo de cofre for digital, solicita a senha e a confirmação
+            int senha = scanner.nextInt();
+            int confirmacaoSenha = scanner.nextInt();
+
+            // Verifica se a senha é válida
+            CofreDigital cofreDigital = new CofreDigital(senha);
+            if (cofreDigital.validarSenha(confirmacaoSenha)) {
+                cofreDigital.imprimirInformacoes();
+                System.out.println("Cofre aberto!");
+            } else {
+                cofreDigital.imprimirInformacoes();
+                System.out.println("Senha incorreta!");
+            }
+        } else if (tipoCofre.equalsIgnoreCase("fisico")) {
+            // Se o tipo de cofre for físico, cria o cofre físico e exibe suas informações
+            CofreFisico cofreFisico = new CofreFisico();
+            cofreFisico.imprimirInformacoes();
+        }
+
+        scanner.close();
+    }
+}
