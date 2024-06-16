@@ -1,7 +1,6 @@
 package me.dio.domain.model;
 
 import jakarta.persistence.*;
-import me.dio.domain.Account;
 
 import java.util.List;
 
